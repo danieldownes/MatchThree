@@ -18,7 +18,6 @@ namespace game
         }
 
         public int c, r;    // Column, Row
-        private GameControl _game;
         private Image _image;
 
         private const int SIZE = 35;
@@ -30,11 +29,8 @@ namespace game
         private Vector2 directionChosen;
 
 
-        public void Init(GameControl game_, int type_, int c_, int r_)
+        public void Init(int c_, int r_)
         {
-            _game = game_;
-            type = type_;
-
             c = c_;
             r = r_;
 
@@ -42,15 +38,23 @@ namespace game
                                                      (GameControl.ROWS - r) * (Gem.SIZE + Gem.GAP) + GameControl.GRID_Y);
 
             _image = this.GetComponent<Image>();
-            SetImage();
         }
 
-        private void SetImage()
+        public int ColourType
         {
-            // Set image to match gem type
-            _image.sprite = gemImages[type - 1];
-            this.transform.localScale = Vector3.one;
-            _image.SetNativeSize();
+            get
+            {
+                return(type);
+            }
+            set
+            {
+                type = value;
+                // Set image to match gem type
+                _image.sprite = gemImages[type - 1];
+                this.transform.localScale = Vector3.one;
+                _image.SetNativeSize();
+            }
+            
         }
 
         // Return position on game area

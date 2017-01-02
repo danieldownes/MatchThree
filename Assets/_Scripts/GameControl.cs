@@ -112,12 +112,13 @@ namespace game
                     // Add Gem
                     Gem gem = Instantiate(Resources.Load("Gem", typeof(Gem))) as Gem;
                     gem.transform.SetParent(gameCanvas);
-                    gem.Init(this, type, c, r);
+                    gem.Init(c, r);
+                    gem.type = type;
                     gem.GemSelected += _onGemSelected;
                     gem.GemLanded += _onGemLanded;
 
                     // Check to ensure new gem wont directly match grid
-                    if( preventMatches)
+                    if ( preventMatches)
 					{
 						List<Gem> matchesHorz = new List<Gem>();
                         List<Gem> matchesVert = new List<Gem>();
@@ -135,8 +136,8 @@ namespace game
 							checkMatch(gem, matchesHorz, matchesVert);
 						}
 					}
-					
-					dropped++;
+                    gem.ColourType = gem.type;
+                    dropped++;
 
                     grid[c, r] = gem;
 
