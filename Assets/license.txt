@@ -1,0 +1,24 @@
+The provided GPL applies to all included files in this repository.
+The only exception to this are all visual design data and sound data.
+
+The FLA structure and naming is covered under the GPL as part of 
+the "game/project" work, but the design (bitmap/vector) art and sound 
+binary data may be considered additional/alternative works not 
+compatible with the GPL. Such sound and graphic assets only "enhance" 
+the overall product and should be seen as separate creative works. 
+The said assets are not directly dependent or required to allow the 
+freedoms of the source-code and other data as described under the GPL.
+
+The GPL is not necessarily applied at the individual file level. The 
+FLA files can be modified as the naming and structure contained 
+within the FLA files may be dependent by the source-code.
+
+If the user wishes to make a derivative work from these works 
+contained in this repository, they may do so but only for such 
+work covered by the GPL, specifically the source-code and its 
+dependencies. In such cases above mentioned graphic and sound 
+data files must be replaced with original works as these are 
+considered copyright and proprietary assets.
+
+This license should remain unmodified with the complete repository
+and all derived branches.
