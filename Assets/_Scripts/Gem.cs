@@ -26,7 +26,7 @@ namespace game
         public const int TYPES = 5;
         public const float SWAP_ANI_TIME = 0.3f;
         
-        private Vector2 directionChosen;
+        private Vector2 directionChosen, startPos;
 
 
         public void Init(int c_, int r_)
@@ -98,21 +98,21 @@ namespace game
                 {
                     // Record initial touch position.
                     case TouchPhase.Began:
-                        //startPos = touch.position;
-                        // directionChosen = false;
+                        startPos = touch.position;
+                        directionChosen = Vector2.zero;
                         print("TOUCH BEGIN");
                         break;
 
                     // Determine direction by comparing the current touch position with the initial one.
                     case TouchPhase.Moved:
-                        //direction = touch.position - startPos;
                         // Ensure movement is sufficent
-                        /*
-                        if (Math.abs(m.x) + Math.abs(m.y) < 2)
+                        directionChosen = startPos - touch.position;
+                        if( directionChosen.magnitude < 2)
                             return;
 
-                        // Detect direction
-                        if (Math.abs(m.x) > Math.abs(m.y))
+                        //TODO: Detect direction
+                        /*
+                        if (Mathf.abs(m.x) > Mathf.abs(m.y))
                             dX = (m.x > 0 ? 1 : -1);
                         else
                             dY = (m.y > 0 ? 1 : -1);
@@ -120,19 +120,10 @@ namespace game
                         _game.dispatchEventWith(MOVED, false, { c: dX, r: dY } );
                         */
                         break;
-
-                    // Report that a direction has been chosen when the finger is lifted.
-                    case TouchPhase.Ended:
-                        // directionChosen = true;
-                        break;
+                        
                 }
             }
-
-            //if(Input.GetMouseButtonDown(0))
-            //if (directionChosen)
-            //{
-            // Something that uses the chosen direction...
-            // }
+            
         }
 
         void OnMouseDown()

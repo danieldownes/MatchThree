@@ -210,7 +210,7 @@ namespace game
 					if( gem != null)
 					{
 						// Drop this gem? Only if no gem below ** & is not on bottom row ** -- change r loop
-						if(r != ROWS - 1 && grid[c, r + 1] == null)
+						if( r != ROWS - 1 && grid[c, r + 1] == null)
 						{
                             gem.DoDropDown(rowDrop * SECS_PER_ROW * 0.6f, lR);
 
@@ -249,14 +249,14 @@ namespace game
 			if( !_canSelect)
 				return;
 				
-			if (gemSelected == null) 				// Select
+			if( gemSelected == null) 				// Select
 			{
 				gemSelected = e.gem;
                 gemSelected.transform.localScale = Vector3.one * 1.2f;
                 // Set selection to top
                 this.transform.SetAsLastSibling();
             }
-			else if (gemSelected == e.gem)         // Deselect
+			else if( gemSelected == e.gem)         // Deselect
 			{
 				gemSelected.transform.localScale = Vector3.one;
 				gemSelected = null;
@@ -280,39 +280,33 @@ namespace game
                 }
 			}
 		}
-
         
 
         /**
-		 * TODO: Handle gem swapping using swipe/drag
-		 *
-         
-        private void _onGemDrag(Event e) 
+		 * Handle gem swapping using swipe/drag
+         */
+        private void _onGemDrag(object sender, GemSelectedEventArgs e) 
 		{
-			if( !_canSelect || _gemSelected == null)
+			if( !_canSelect || gemSelected == null)
 				return;
-
-            int c = _gemSelected.c + e.data.c;
-            int r = _gemSelected.r + e.data.r;
-			
+            			
 			// Within bounds?
-			if( c >= 0 && c < COLS && r >= 0 && r < ROWS)
+			if(e.gem.c >= 0 && e.gem.c < COLS && e.gem.r >= 0 && e.gem.r < ROWS)
 			{
-				_gemSwap = grid[c, r];
+				gemSwap = e.gem;
 				
 				// Gem that is being dragged over is by the side of selected gem?
-				if( checkSwap(_gemSelected, _gemSwap))
+				if( PatternMatching.checkSwap( gemSelected, gemSwap))
 				{
-					_swapGems(_gemSelected, _gemSwap, _completeSwapAni);
+					_swapGems( gemSelected, gemSwap, _completeSwapAni);
 					
 					// Disable selection
 					_canSelect = false;
 				}
 			}
 		}
-        */
+        
 		
-
         private void playMove()
         {
             checkGems.Clear();
@@ -510,7 +504,7 @@ namespace game
 				return;
 
             int n = 0;
-			for( int r = 0; r < ROWS; r++)
+			for(int r = 0; r < ROWS; r++)
 			{
 				for(int c = 0; c < COLS; c++)
 				{
