@@ -4,13 +4,10 @@ This project is mainly an exercise to demonstrate my personal coding style and a
 
 The project also acts as a playground to practise different aritectual and coding practises that can be easily shared (i.e. not under NDA) to those parties who are interested.
 
-The following C# features are implemented, and explainations are provided here as well as within the code:
 
-Explicit public and private method declarations
-  Keeps things organised and looks neater.
-
-Events and Delegates
-
-Properties
-
-(Lambda Expressions)
+Todo:
+Drag gem to swap
+Touch support
+Scoring UI
+Swappable Gem Hint Visual (logic implemented)
+Game Over UI

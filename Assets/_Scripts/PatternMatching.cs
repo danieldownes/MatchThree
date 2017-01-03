@@ -27,9 +27,9 @@ namespace game
             Gem g;
             int m = 0;  // Moves counter
 
-            for (int c = 0; c < GameControl.COLS; c++)
+            for (int c = 0; c < Grid.COLS; c++)
             {
-                for (int r = 0; r < GameControl.ROWS; r++)
+                for (int r = 0; r < Grid.ROWS; r++)
                 {
                     // Gem to check
                     g = grid[c, r];
@@ -72,7 +72,7 @@ namespace game
 
         private static bool hasSameGem(Gem[,] grid, int type, int x_, int y_)
         {
-            return (x_ >= 0 && x_ < GameControl.COLS && y_ >= 0 && y_ < GameControl.ROWS)           /* bounds check */
+            return (x_ >= 0 && x_ < Grid.COLS && y_ >= 0 && y_ < Grid.ROWS)           /* bounds check */
                      && (grid != null && grid[x_, y_].type == type);        /* gem type check */
         }
     }

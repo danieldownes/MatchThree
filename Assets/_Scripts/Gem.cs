@@ -34,8 +34,8 @@ namespace game
             c = c_;
             r = r_;
 
-            this.transform.localPosition = new Vector2(c * (Gem.SIZE + Gem.GAP) + GameControl.GRID_X,
-                                                     (GameControl.ROWS - r) * (Gem.SIZE + Gem.GAP) + GameControl.GRID_Y);
+            this.transform.localPosition = new Vector2(c * (Gem.SIZE + Gem.GAP) + Grid.WIDTH,
+                                                     (Grid.ROWS - r) * (Gem.SIZE + Gem.GAP) + Grid.HEIGHT);
 
             _image = this.GetComponent<Image>();
         }
@@ -60,7 +60,7 @@ namespace game
         // Return position on game area
         public static Vector2 GetVisualPosition(int c, int r)
         {
-            return new Vector2(c * (Gem.SIZE + Gem.GAP) + GameControl.GRID_X, r * (Gem.SIZE + Gem.GAP) + GameControl.GRID_Y);
+            return new Vector2(c * (Gem.SIZE + Gem.GAP) + Grid.WIDTH, r * (Gem.SIZE + Gem.GAP) + Grid.HEIGHT);
         }
 
 
@@ -70,7 +70,7 @@ namespace game
             //TODO: optimisation note; Only trigger OnGemLanded when last gem has landed 
 
             // Move Example
-            LeanTween.moveLocal(this.gameObject, GetVisualPosition(c, 0 - r), GameControl.SECS_PER_ROW * r)
+            LeanTween.moveLocal(this.gameObject, GetVisualPosition(c, 0 - r), Grid.SECS_PER_ROW * r)
                                 .setDelay(delay_)
                                 .setEase(LeanTweenType.easeInSine)
                                 .setOnComplete( () => {  OnGemLanded(new EventArgs()); }
@@ -81,7 +81,7 @@ namespace game
         // Drop gem already on grid 
         public void DoDropDown(float delay_, int lR)
         {
-            LeanTween.moveLocal(this.gameObject, GetVisualPosition(c, 0 - lR), (lR - r) * GameControl.SECS_PER_ROW)
+            LeanTween.moveLocal(this.gameObject, GetVisualPosition(c, 0 - lR), (lR - r) * Grid.SECS_PER_ROW)
                                 .setDelay(delay_)
                                 .setEase(LeanTweenType.easeInSine);
         }
