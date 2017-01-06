@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System;
 
@@ -6,7 +7,7 @@ using System;
 namespace game 
 {
 
-    public class Gem : MonoBehaviour
+    public class Gem : MonoBehaviour, IDragHandler
     {
         public Sprite[] gemImages;
 
@@ -131,6 +132,21 @@ namespace game
             OnGemSelected(new GemSelectedEventArgs(this));
         }
 
+        public void OnDrag(PointerEventData data)
+        {
+            //OnGemSelected(new GemSelectedEventArgs(null));
+            if (data.dragging)
+            {
+                if (Mathf.Abs(data.delta.x) > Mathf.Abs(data.delta.y))
+                    directionChosen = (data.delta.x > 0 ? Vector2.right : Vector2.left);
+                else
+                    directionChosen = (data.delta.x > 0 ? Vector2.up : Vector2.down);
+
+                OnGemDragged(new GemDraggedEventArgs(this, directionChosen));
+            }
+        }
+
+        public event GemLandedHandler GemLanded;
         protected virtual void OnGemLanded(EventArgs e)
         {
             GemLandedHandler handler = GemLanded;
@@ -140,9 +156,10 @@ namespace game
             }
         }
         public delegate void GemLandedHandler(object sender, EventArgs e);
-        public event GemLandedHandler GemLanded;
+        
 
 
+        
         protected virtual void OnGemSelected(GemSelectedEventArgs e)
 		{
             GemSelectedHandler handler = GemSelected;
@@ -151,9 +168,22 @@ namespace game
                 handler(this, e);
             }
 		}
-        public delegate void GemSelectedHandler(object sender, GemSelectedEventArgs e);
         public event GemSelectedHandler GemSelected;
-	}
+        public delegate void GemSelectedHandler(object sender, GemSelectedEventArgs e);
+        
+
+        public event GemDraggedHandler GemDragged;
+        protected virtual void OnGemDragged(GemDraggedEventArgs e)
+        {
+            GemDraggedHandler handler = GemDragged;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+        public delegate void GemDraggedHandler(object sender, GemDraggedEventArgs e);
+        
+    }
 
     public class GemSelectedEventArgs : EventArgs
     {
@@ -162,6 +192,18 @@ namespace game
         public GemSelectedEventArgs(Gem gem_)
         {
             gem = gem_;
+        }
+    }
+
+    public class GemDraggedEventArgs : EventArgs
+    {
+        public Gem gem { get; private set; }
+        public Vector2 dragDirection { get; private set; }
+
+        public GemDraggedEventArgs(Gem gem_, Vector2 dragDirection_)
+        {
+            gem = gem_;
+            dragDirection = dragDirection_;
         }
     }
 }

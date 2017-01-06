@@ -6,7 +6,6 @@ The project also acts as a playground to practise different aritectual and codin
 
 
 Todo:
-Drag gem to swap
 Touch support
 Scoring UI
 Swappable Gem Hint Visual (logic implemented)

@@ -84,8 +84,9 @@ namespace game
                     gem.transform.SetParent(game.gameCanvas);
                     gem.Init(c, r);
                     gem.type = type;
-                    gem.GemSelected += _onGemSelected;
                     gem.GemLanded += _onGemLanded;
+                    gem.GemSelected += _onGemSelected;
+                    gem.GemDragged += _onGemDrag;
 
                     // Check to ensure new gem wont directly match grid
                     if (preventMatches)
@@ -255,15 +256,16 @@ namespace game
         /**
 		 * Handle gem swapping using swipe/drag
          */
-        private void _onGemDrag(object sender, GemSelectedEventArgs e)
+        private void _onGemDrag(object sender, GemDraggedEventArgs e)
         {
-            if (!canSelect || gemSelected == null)
+            if (!canSelect || e.gem == null)
                 return;
-
+            
             // Within bounds?
             if (e.gem.c >= 0 && e.gem.c < Grid.COLS && e.gem.r >= 0 && e.gem.r < Grid.ROWS)
             {
-                gemSwap = e.gem;
+                gemSwap = grid[e.gem.c + (int)e.dragDirection.x, e.gem.r + (int)e.dragDirection.y];
+                gemSelected = e.gem;
 
                 // Gem that is being dragged over is by the side of selected gem?
                 if (PatternMatching.checkSwap(gemSelected, gemSwap))
