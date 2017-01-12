@@ -2,16 +2,18 @@ Match-3 style game in C# by Daniel Downes
 
 This project is mainly an exercise to demonstrate my personal coding style and ability.
 
-The project also acts as a playground to practise different aritectual and coding practises that can be easily shared (i.e. not under NDA) to those parties who are interested.
+The project also acts as a playground to try out different architectural and coding practises that can be easily shared (i.e. not under NDA) to those who are interested.
 
 
 Todo:
+
 Touch support
-Scoring class and UI
 Swappable Gem Hint Visual (logic implemented)
 Game Over UI
 
+
 Coding Ideas: 
+
 Vector2Int
 Grid MVC
 IMoveable, GemMoveable, BombMoveable - MVC
@@ -21,8 +23,10 @@ Unit Tests
 
 Convenstions:
 
-private members start with lowercase
 internal/public members start with Uppercase
+Private fields start with underscore and lowercase to allow properties with the same name to start with a lowercase, and the backing field to be underscore lowercase
+
+
 
 
 Notes:

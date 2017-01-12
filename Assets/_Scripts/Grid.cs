@@ -20,6 +20,7 @@ namespace game
 
         internal const float SECS_PER_ROW = 0.1f;
 
+        
         // User interaction control
         private Gem gemSelected, gemSwap;
         internal bool canSelect;
@@ -43,7 +44,7 @@ namespace game
 
             checkGems = new List<Gem>();
             gemsDropping = 0;
-
+            
             canSelect = false;
         }
         
@@ -365,10 +366,10 @@ namespace game
             // Increase score of there are matches
             if (matchesN > 0 && checkGems != null && checkGems.Count > 0)
             {
-                //int inc = addScore(matchesN * score_multiplier);
+                game.score.AddPoints(matchesN);
 
                 // Increase chain multiplier
-                //score_multiplier += 100;
+                game.score.IncreaseMultiplier();
 
                 // Chain matches
                 playMove();
@@ -455,16 +456,11 @@ namespace game
             // Successful swap?
             if (matchesN > 0)
             {
-                //addScore(matchesN * score_multiplier);
-                //TODO: ScoreNotification note = new ScoreNotification(this, _gemSelected.x, _gemSelected.y, matchesN * score_multiplier);
-
-                // Reset multiplier
-                //score_multiplier = 100;
-
-
+                game.score.ResetMultiplier();
+                game.score.AddPoints(matchesN);
+                
                 deselectGem();
-
-
+                
                 playMove();
             }
             else

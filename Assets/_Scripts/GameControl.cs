@@ -9,22 +9,23 @@ namespace game
     /// </summary>
     internal class GameControl : MonoBehaviour
     {
-        internal RectTransform gameCanvas;
+        public RectTransform gameCanvas;
 
         // Game Grid
         internal Grid grid;
 
-
-        //TODO: Score control
-        //private int score;
-        //private int score_multiplier;
-
+        internal Score score;
+        
         internal bool gameOverFlag;
 
 
-        internal void Start()
+        public void Start()
         {
+            grid = this.GetComponent<Grid>();
             grid.Init(this);
+
+            score = this.GetComponent<Score>();
+            score.Init();
 
             Reset();
         }
@@ -34,34 +35,13 @@ namespace game
         /// </summary>
         internal void Reset()
         {
+            gameOverFlag = false;
             grid.Reset();
-
-            //score = 0;
-			//score_multiplier = 100;
-			
-			gameOverFlag = false;
-			
-			//countdown.Reset();
-			
-			//visuals.Reset();
-			
-			grid.Populate(true);
+            grid.Populate(true);
+            score.Init();
 		}
 
-
-        /// <summary>
-        /// Controller: Update score model and view 
-        /// </summary>
-        /// <param name="newpoints"></param>
-        /// <returns>New score total</returns>
-        internal int AddScore(int newpoints)
-		{
-            throw new NotImplementedException();
-            //score += newpoints;
-            //TODO: visuals.txtScore.text = score.ToString();
-            return newpoints;
-		}
-
+       
         /// <summary>
         /// Called to trigger gameover state
         /// </summary>
@@ -80,7 +60,7 @@ namespace game
 
             grid.DropAllGems();
             
-            //visuals.setHintGem();
+            //TODO: setHintGem();
 
             grid.canSelect = false;
 		}

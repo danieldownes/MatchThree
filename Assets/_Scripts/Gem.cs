@@ -11,7 +11,15 @@ namespace game
     /// </summary>
     internal class Gem : MonoBehaviour, IDragHandler
     {
-        internal Sprite[] gemImages;
+        public Sprite[] gemImages;
+        private Image _image;
+
+        private const int SIZE = 35;
+        private const int GAP = 6;
+        internal const float SWAP_ANI_TIME = 0.3f;
+
+        private Vector2 directionChosen, startPos;
+
 
         private int _type;
         internal int type
@@ -21,15 +29,9 @@ namespace game
         }
 
         internal int c, r;    // Column, Row
-        private Image _image;
-
-        private const int SIZE = 35;
-        private const int GAP = 6;
-
-        internal const int TYPES = 5;
-        internal const float SWAP_ANI_TIME = 0.3f;
         
-        private Vector2 directionChosen, startPos;
+        internal const int TYPES = 5;
+               
 
         /// <summary>
         /// Initialise the gem
@@ -160,7 +162,7 @@ namespace game
             OnGemSelected(new GemSelectedEventArgs(this));
         }
 
-        internal void OnDrag(PointerEventData data)
+        public void OnDrag(PointerEventData data)
         {
             //OnGemSelected(new GemSelectedEventArgs(null));
             if (data.dragging)
