@@ -3,9 +3,9 @@
 namespace game
 {
 
-    public class PatternMatching
+    internal class PatternMatching
     {
-        public static bool checkSwap(Gem g1, Gem g2)
+        internal static bool checkSwap(Gem g1, Gem g2)
         {
             return ((g1.c + 1 == g2.c && g1.r == g2.r) ||
                     (g1.c - 1 == g2.c && g1.r == g2.r) ||
@@ -22,7 +22,7 @@ namespace game
 		*	                     	 o = Matching gems
 		*	                     	 - = Irrelevant gem
 		*/
-        public static int findPossibleMoves(Gem[,] grid, List<Gem> movableGems)
+        internal static int findPossibleMoves(Gem[,] grid, List<Gem> movableGems)
         {
             Gem g;
             int m = 0;  // Moves counter

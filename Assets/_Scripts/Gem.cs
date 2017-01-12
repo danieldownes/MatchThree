@@ -7,30 +7,30 @@ using System;
 namespace game 
 {
 
-    public class Gem : MonoBehaviour, IDragHandler
+    internal class Gem : MonoBehaviour, IDragHandler
     {
-        public Sprite[] gemImages;
+        internal Sprite[] gemImages;
 
         private int _type;
-        public int type
+        internal int type
         {
             set { _type = value; }
             get { return _type; }
         }
 
-        public int c, r;    // Column, Row
+        internal int c, r;    // Column, Row
         private Image _image;
 
         private const int SIZE = 35;
         private const int GAP = 6;
 
-        public const int TYPES = 5;
-        public const float SWAP_ANI_TIME = 0.3f;
+        internal const int TYPES = 5;
+        internal const float SWAP_ANI_TIME = 0.3f;
         
         private Vector2 directionChosen, startPos;
 
 
-        public void Init(int c_, int r_)
+        internal void Init(int c_, int r_)
         {
             c = c_;
             r = r_;
@@ -41,7 +41,7 @@ namespace game
             _image = this.GetComponent<Image>();
         }
 
-        public int ColourType
+        internal int ColourType
         {
             get
             {
@@ -59,14 +59,14 @@ namespace game
         }
 
         // Return position on game area
-        public static Vector2 GetVisualPosition(int c, int r)
+        internal static Vector2 GetVisualPosition(int c, int r)
         {
             return new Vector2(c * (Gem.SIZE + Gem.GAP) + Grid.WIDTH, r * (Gem.SIZE + Gem.GAP) + Grid.HEIGHT);
         }
 
 
         // Drop newly created gem 
-        public void DoDrop(float delay_)
+        internal void DoDrop(float delay_)
         {
             //TODO: optimisation note; Only trigger OnGemLanded when last gem has landed 
 
@@ -80,7 +80,7 @@ namespace game
         }
 
         // Drop gem already on grid 
-        public void DoDropDown(float delay_, int lR)
+        internal void DoDropDown(float delay_, int lR)
         {
             LeanTween.moveLocal(this.gameObject, GetVisualPosition(c, 0 - lR), (lR - r) * Grid.SECS_PER_ROW)
                                 .setDelay(delay_)
@@ -132,7 +132,7 @@ namespace game
             OnGemSelected(new GemSelectedEventArgs(this));
         }
 
-        public void OnDrag(PointerEventData data)
+        internal void OnDrag(PointerEventData data)
         {
             //OnGemSelected(new GemSelectedEventArgs(null));
             if (data.dragging)
@@ -146,7 +146,7 @@ namespace game
             }
         }
 
-        public event GemLandedHandler GemLanded;
+        internal event GemLandedHandler GemLanded;
         protected virtual void OnGemLanded(EventArgs e)
         {
             GemLandedHandler handler = GemLanded;
@@ -155,7 +155,7 @@ namespace game
                 handler(this, e);
             }
         }
-        public delegate void GemLandedHandler(object sender, EventArgs e);
+        internal delegate void GemLandedHandler(object sender, EventArgs e);
         
 
 
@@ -168,11 +168,11 @@ namespace game
                 handler(this, e);
             }
 		}
-        public event GemSelectedHandler GemSelected;
-        public delegate void GemSelectedHandler(object sender, GemSelectedEventArgs e);
+        internal event GemSelectedHandler GemSelected;
+        internal delegate void GemSelectedHandler(object sender, GemSelectedEventArgs e);
         
 
-        public event GemDraggedHandler GemDragged;
+        internal event GemDraggedHandler GemDragged;
         protected virtual void OnGemDragged(GemDraggedEventArgs e)
         {
             GemDraggedHandler handler = GemDragged;
@@ -181,26 +181,26 @@ namespace game
                 handler(this, e);
             }
         }
-        public delegate void GemDraggedHandler(object sender, GemDraggedEventArgs e);
+        internal delegate void GemDraggedHandler(object sender, GemDraggedEventArgs e);
         
     }
 
-    public class GemSelectedEventArgs : EventArgs
+    internal class GemSelectedEventArgs : EventArgs
     {
-        public Gem gem { get; private set; }
+        internal Gem gem { get; private set; }
 
-        public GemSelectedEventArgs(Gem gem_)
+        internal GemSelectedEventArgs(Gem gem_)
         {
             gem = gem_;
         }
     }
 
-    public class GemDraggedEventArgs : EventArgs
+    internal class GemDraggedEventArgs : EventArgs
     {
-        public Gem gem { get; private set; }
-        public Vector2 dragDirection { get; private set; }
+        internal Gem gem { get; private set; }
+        internal Vector2 dragDirection { get; private set; }
 
-        public GemDraggedEventArgs(Gem gem_, Vector2 dragDirection_)
+        internal GemDraggedEventArgs(Gem gem_, Vector2 dragDirection_)
         {
             gem = gem_;
             dragDirection = dragDirection_;

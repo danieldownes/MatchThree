@@ -14,29 +14,29 @@ namespace game
     // Object Factory, with Object Pool support
     // Unit Tests
 
-    public class GameControl : MonoBehaviour
+    internal class GameControl : MonoBehaviour
     {
-        public RectTransform gameCanvas;
+        internal RectTransform gameCanvas;
 
         // Game Grid
-        public Grid grid;
-        
-       
+        internal Grid grid;
+
+
         //TODO: Score control
         //private int score;
         //private int score_multiplier;
-       
-        public bool gameOverFlag;
-        
 
-        public void Start()
+        internal bool gameOverFlag;
+
+
+        internal void Start()
         {
             grid.Init(this);
 
             Reset();
         }
 
-        public void Reset()
+        internal void Reset()
         {
             grid.Reset();
 
@@ -53,15 +53,15 @@ namespace game
 		}
 
 
-		
-		public int addScore(int newpoints)
+
+        internal int addScore(int newpoints)
 		{
 			//score += newpoints;
 			//TODO: visuals.txtScore.text = score.ToString();
 			return newpoints;
 		}
-		
-		public void gameOver(bool fromCountdown = false)
+
+        internal void gameOver(bool fromCountdown = false)
 		{
 			// If called from FuseCountdown, but is already game over (ie from no more matches), then ignore
 			if( fromCountdown && gameOverFlag)
@@ -73,15 +73,7 @@ namespace game
 			if( !grid.canSelect)
 				return;
 
-            int n = 0;
-			for(int r = 0; r < Grid.ROWS; r++)
-			{
-				for(int c = 0; c < Grid.COLS; c++)
-				{
-					//Tweener.addCaller(this, { delay:n * 0.01, count:1, onComplete:_removeAndExplodeGem, onCompleteParams:[Gem(grid[c][r])] } );
-					n++;
-				}
-			}
+            grid.DropAllGems();
             
             //visuals.setHintGem();
 

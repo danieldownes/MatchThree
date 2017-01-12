@@ -5,27 +5,27 @@ using System.Collections.Generic;
 
 namespace game
 {
-    public class Grid : MonoBehaviour
+    internal class Grid : MonoBehaviour
     {
         private GameControl game;
 
-        public Gem[,] grid;
-        public const int ROWS = 8;
-        public const int COLS = 8;
-        public const int WIDTH = 30;
-        public const int HEIGHT = -30;
+        internal Gem[,] grid;
+        internal const int ROWS = 8;
+        internal const int COLS = 8;
+        internal const int WIDTH = 30;
+        internal const int HEIGHT = -30;
 
-        public const float SECS_PER_ROW = 0.1f;
+        internal const float SECS_PER_ROW = 0.1f;
 
         // User interaction control
         private Gem gemSelected, gemSwap;
-        public bool canSelect;
+        internal bool canSelect;
 
         // Logic
-        public List<Gem> checkGems;
+        internal List<Gem> checkGems;
         private uint gemsDropping;
 
-        public void Init(GameControl game_)
+        internal void Init(GameControl game_)
         {
             game = game_;
 
@@ -33,7 +33,7 @@ namespace game
             grid = new Gem[Grid.COLS, Grid.ROWS];
         }
 
-        public void Reset()
+        internal void Reset()
         {
             gemSelected = null;
             gemSwap = null;
@@ -48,7 +48,7 @@ namespace game
 		 * Populate the empty grid spaces
 		 * Also handles falling and re-population
 		 */
-        public void populate(bool preventMatches = false, Gem[] newGems = null)
+        internal void populate(bool preventMatches = false, Gem[] newGems = null)
         {
             for (int c = 0; c < Grid.COLS; c++)
             {
@@ -66,6 +66,7 @@ namespace game
             List<Gem> newGems = new List<Gem>(); //TODO: is there a better way to just ignore/swallow 'newGems' parameter?
             populateCol(c, preventMatches, newGems, delayOffset);
         }
+        
 
         private void populateCol(int c, bool preventMatches, List<Gem> newGems, float delayOffset = 0)
         {
@@ -162,11 +163,25 @@ namespace game
             return 0;
         }
 
+        internal void DropAllGems()
+        {
+            int n = 0;
+            for (int r = 0; r < Grid.ROWS; r++)
+            {
+                for (int c = 0; c < Grid.COLS; c++)
+                {
+                    //Tweener.addCaller(this, { delay:n * 0.01, count:1, onComplete:_removeAndExplodeGem, onCompleteParams:[Gem(grid[c][r])] } );
+                    n++;
+                }
+            }
+        }
+
+
         /**
 		 * Drop exiting gems into empty grid spaces
          * TODO: MVC VIEW + Model
 		 */
-        public void dropGems(List<Gem> affectedGems_)
+        internal void DropGems(List<Gem> affectedGems_)
         {
             Gem gem;
 
@@ -283,7 +298,7 @@ namespace game
             checkGems.Clear();
 
             // Drop new gems (and re-populate grid)
-            dropGems(checkGems);
+            DropGems(checkGems);
         }
 
         private void playCheck()
@@ -301,7 +316,7 @@ namespace game
         }
 
 
-        public void checkChaining()
+        internal void checkChaining()
         {
             // Check affected gems on grid for new matches
             int matchesN = 0;

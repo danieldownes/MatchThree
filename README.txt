@@ -10,3 +10,11 @@ Touch support
 Scoring UI
 Swappable Gem Hint Visual (logic implemented)
 Game Over UI
+
+
+Notes:
+
+'internal' instead of 'public'
+I agree with top answer here:
+http://stackoverflow.com/questions/106941/should-i-use-internal-or-public-visibility-by-default
+
