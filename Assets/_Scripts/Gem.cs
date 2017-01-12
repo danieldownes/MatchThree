@@ -1,12 +1,14 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using System;
 
+using System;
 
 namespace game 
 {
-
+    /// <summary>
+    /// 
+    /// </summary>
     internal class Gem : MonoBehaviour, IDragHandler
     {
         internal Sprite[] gemImages;
@@ -29,18 +31,27 @@ namespace game
         
         private Vector2 directionChosen, startPos;
 
-
+        /// <summary>
+        /// Initialise the gem
+        /// </summary>
+        /// <param name="c_"></param>
+        /// <param name="r_"></param>
         internal void Init(int c_, int r_)
         {
+            // Model:
             c = c_;
             r = r_;
 
+            // View:
             this.transform.localPosition = new Vector2(c * (Gem.SIZE + Gem.GAP) + Grid.WIDTH,
                                                      (Grid.ROWS - r) * (Gem.SIZE + Gem.GAP) + Grid.HEIGHT);
 
             _image = this.GetComponent<Image>();
         }
 
+        /// <summary>
+        /// View: Set gem sprite
+        /// </summary>
         internal int ColourType
         {
             get
@@ -58,17 +69,24 @@ namespace game
             
         }
 
-        // Return position on game area
+        /// <summary>
+        /// </summary>
+        /// <param name="c">Column</param>
+        /// <param name="r">Row</param>
+        /// <returns>Visual local transform position within game area</returns>
         internal static Vector2 GetVisualPosition(int c, int r)
         {
             return new Vector2(c * (Gem.SIZE + Gem.GAP) + Grid.WIDTH, r * (Gem.SIZE + Gem.GAP) + Grid.HEIGHT);
         }
 
 
-        // Drop newly created gem 
+        /// <summary>
+        /// View: Drop newly created gem 
+        /// </summary>
+        /// <param name="delay_">Tween delay</param>
         internal void DoDrop(float delay_)
         {
-            //TODO: optimisation note; Only trigger OnGemLanded when last gem has landed 
+            //TODO: Optimisation idea; Only trigger OnGemLanded when last gem has landed 
 
             // Move Example
             LeanTween.moveLocal(this.gameObject, GetVisualPosition(c, 0 - r), Grid.SECS_PER_ROW * r)
@@ -76,10 +94,13 @@ namespace game
                                 .setEase(LeanTweenType.easeInSine)
                                 .setOnComplete( () => {  OnGemLanded(new EventArgs()); }
                                );
-            
         }
 
-        // Drop gem already on grid 
+        /// <summary>
+        /// View: Drop gem already on grid
+        /// </summary>
+        /// <param name="delay_">Visual Tween delay</param>
+        /// <param name="lR"></param>
         internal void DoDropDown(float delay_, int lR)
         {
             LeanTween.moveLocal(this.gameObject, GetVisualPosition(c, 0 - lR), (lR - r) * Grid.SECS_PER_ROW)
@@ -87,8 +108,15 @@ namespace game
                                 .setEase(LeanTweenType.easeInSine);
         }
 
+
+        // View / Controller related events
+
+        /// <summary>
+        /// Used for touch detection
+        /// </summary>
         void Update()
         {
+            //TODO: Complete Touch
             // Track a single touch as a direction control.
             if (Input.touchCount > 0)
             {

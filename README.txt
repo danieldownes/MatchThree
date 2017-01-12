@@ -7,9 +7,22 @@ The project also acts as a playground to practise different aritectual and codin
 
 Todo:
 Touch support
-Scoring UI
+Scoring class and UI
 Swappable Gem Hint Visual (logic implemented)
 Game Over UI
+
+Coding Ideas: 
+Vector2Int
+Grid MVC
+IMoveable, GemMoveable, BombMoveable - MVC
+Object Factory, with Object Pool support
+Unit Tests
+
+
+Convenstions:
+
+private members start with lowercase
+internal/public members start with Uppercase
 
 
 Notes:

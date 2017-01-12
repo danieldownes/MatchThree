@@ -1,19 +1,12 @@
 using UnityEngine;
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using game;
 
 namespace game
 {
-    //Ideas: 
-    // Vector2Int
-    // Grid MVC
-    // IMoveable, GemMoveable, BombMoveable - MVC
-    // Object Factory, with Object Pool support
-    // Unit Tests
-
+    /// <summary>
+    /// Main game logic control flow
+    /// </summary>
     internal class GameControl : MonoBehaviour
     {
         internal RectTransform gameCanvas;
@@ -36,6 +29,9 @@ namespace game
             Reset();
         }
 
+        /// <summary>
+        /// Reset all objects ready for a new game
+        /// </summary>
         internal void Reset()
         {
             grid.Reset();
@@ -49,19 +45,28 @@ namespace game
 			
 			//visuals.Reset();
 			
-			grid.populate(true);
+			grid.Populate(true);
 		}
 
 
-
-        internal int addScore(int newpoints)
+        /// <summary>
+        /// Controller: Update score model and view 
+        /// </summary>
+        /// <param name="newpoints"></param>
+        /// <returns>New score total</returns>
+        internal int AddScore(int newpoints)
 		{
-			//score += newpoints;
-			//TODO: visuals.txtScore.text = score.ToString();
-			return newpoints;
+            throw new NotImplementedException();
+            //score += newpoints;
+            //TODO: visuals.txtScore.text = score.ToString();
+            return newpoints;
 		}
 
-        internal void gameOver(bool fromCountdown = false)
+        /// <summary>
+        /// Called to trigger gameover state
+        /// </summary>
+        /// <param name="fromCountdown">Gameover from countdown timeout condition</param>
+        internal void GameOver(bool fromCountdown = false)
 		{
 			// If called from FuseCountdown, but is already game over (ie from no more matches), then ignore
 			if( fromCountdown && gameOverFlag)
