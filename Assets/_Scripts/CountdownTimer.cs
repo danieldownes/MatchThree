@@ -10,7 +10,7 @@ namespace game
         [SerializeField]
         private Animation Sparks;
 
-        private static float COUNTDOWN_SECONDS = 120.0f;
+        private static float COUNTDOWN_SECONDS = 60.0f;
         private float startTime;
     
 	    void Start()
@@ -20,7 +20,7 @@ namespace game
                 throw new UnassignedReferenceException();
             }
             Sparks.Stop();
-            StartTimer();
+            Sparks.transform.localScale = Vector3.zero;
         }
         
         void Update()
@@ -37,6 +37,7 @@ namespace game
         /// </summary>
         internal void StartTimer()
         {
+            Sparks.transform.localScale = Vector3.one;
             Sparks["CountdownSparks"].speed = 1 / COUNTDOWN_SECONDS;
             Sparks.Play();
             startTime = Time.timeSinceLevelLoad;
@@ -47,7 +48,7 @@ namespace game
         protected virtual void OnTimesUp(TimesUpEventArgs e)
         {
             TimesUpHandler handler = TimesUp;
-            if (handler != null)
+            if( handler != null)
             {
                 handler(this, e);
             }

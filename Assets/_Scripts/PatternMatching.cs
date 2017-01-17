@@ -42,14 +42,14 @@ namespace game
             Gem g;
             int m = 0;  // Moves counter
 
-            for (int c = 0; c < Grid.COLS; c++)
+            for( int c = 0; c < Grid.COLS; c++)
             {
-                for (int r = 0; r < Grid.ROWS; r++)
+                for( int r = 0; r < Grid.ROWS; r++)
                 {
                     // Gem to check
                     g = grid[c, r];
 
-                    if (PatternMatching.checkPattern(grid, g, 1, 1, 2, 1, true, true)         /* Pattern: a(x,y) */
+                    if( PatternMatching.checkPattern(grid, g, 1, 1, 2, 1, true, true)         /* Pattern: a(x,y) */
                      || PatternMatching.checkPattern(grid, g, -1, 1, 1, 1, true, false)       /* Pattern: b(x,y) */
                      || PatternMatching.checkPattern(grid, g, 2, 0, 3, 0, true, false)        /* Pattern: c(x,y) */
                      || PatternMatching.checkPattern(grid, g, 1, 1, 1, 2, true, true)         /* Pattern: a(y,x) */
@@ -80,11 +80,11 @@ namespace game
         private static bool checkPattern(Gem[,] grid, Gem g, int x1, int y1, int x2, int y2, bool flipX, bool flipY)
         {
             bool canMove = PatternMatching.hasSameGem(grid, g.type, g.c + x1, g.r + y1) && PatternMatching.hasSameGem(grid, g.type, g.c + x2, g.r + y2);    // Base pattern
-            if (flipX)
+            if( flipX)
                 canMove = canMove || PatternMatching.hasSameGem(grid, g.type, g.c - x1, g.r + y1) && PatternMatching.hasSameGem(grid, g.type, g.c - x2, g.r + y2);  // Flip X
-            if (flipY)
+            if( flipY)
                 canMove = canMove || PatternMatching.hasSameGem(grid, g.type, g.c + x1, g.r - y1) && PatternMatching.hasSameGem(grid, g.type, g.c + x2, g.r - y2);  // Flip Y
-            if (flipX && flipY)
+            if( flipX && flipY)
                 canMove = canMove || PatternMatching.hasSameGem(grid, g.type, g.c - x1, g.r - y1) && PatternMatching.hasSameGem(grid, g.type, g.c - x2, g.r - y2);  // Flip X & Y
 
             return canMove;

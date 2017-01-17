@@ -11,7 +11,9 @@ namespace game
     /// </summary>
     internal class Gem : MonoBehaviour, IDragHandler
     {
-        public Sprite[] gemImages;
+        [SerializeField]
+        private Sprite[] gemImages;
+
         private Image _image;
 
         private const int SIZE = 35;
@@ -120,7 +122,7 @@ namespace game
         {
             //TODO: Complete Touch
             // Track a single touch as a direction control.
-            if (Input.touchCount > 0)
+            if( Input.touchCount > 0)
             {
                 Touch touch = Input.GetTouch(0);
 
@@ -143,7 +145,7 @@ namespace game
 
                         //TODO: Detect direction
                         /*
-                        if (Mathf.abs(m.x) > Mathf.abs(m.y))
+                        if( Mathf.abs(m.x) > Mathf.abs(m.y))
                             dX = (m.x > 0 ? 1 : -1);
                         else
                             dY = (m.y > 0 ? 1 : -1);
@@ -165,9 +167,9 @@ namespace game
         public void OnDrag(PointerEventData data)
         {
             //OnGemSelected(new GemSelectedEventArgs(null));
-            if (data.dragging)
+            if( data.dragging)
             {
-                if (Mathf.Abs(data.delta.x) > Mathf.Abs(data.delta.y))
+                if( Mathf.Abs(data.delta.x) > Mathf.Abs(data.delta.y))
                     directionChosen = (data.delta.x > 0 ? Vector2.right : Vector2.left);
                 else
                     directionChosen = (data.delta.x > 0 ? Vector2.up : Vector2.down);
@@ -180,7 +182,7 @@ namespace game
         protected virtual void OnGemLanded(EventArgs e)
         {
             GemLandedHandler handler = GemLanded;
-            if (handler != null)
+            if( handler != null)
             {
                 handler(this, e);
             }
@@ -193,7 +195,7 @@ namespace game
         protected virtual void OnGemSelected(GemSelectedEventArgs e)
 		{
             GemSelectedHandler handler = GemSelected;
-            if (handler != null)
+            if( handler != null)
             {
                 handler(this, e);
             }
@@ -205,7 +207,7 @@ namespace game
         protected virtual void OnGemDragged(GemDraggedEventArgs e)
         {
             GemDraggedHandler handler = GemDragged;
-            if (handler != null)
+            if( handler != null)
             {
                 handler(this, e);
             }

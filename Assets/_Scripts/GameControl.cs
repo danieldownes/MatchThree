@@ -15,7 +15,9 @@ namespace game
         internal Grid grid;
 
         internal Score score;
-                
+
+        internal CountdownTimer countDownTimer;
+
         internal bool gameOverFlag;
 
 
@@ -27,8 +29,13 @@ namespace game
             score = this.GetComponent<Score>();
             score.Init();
 
+            countDownTimer = this.GetComponent<CountdownTimer>();
+            countDownTimer.StartTimer();
+            countDownTimer.TimesUp += CountDownTimer_TimesUp;
+
             Reset();
         }
+
 
         /// <summary>
         /// Reset all objects ready for a new game
@@ -64,7 +71,12 @@ namespace game
 
             grid.canSelect = false;
 		}
-		
-		
+
+
+        private void CountDownTimer_TimesUp(object sender, TimesUpEventArgs e)
+        {
+            GameOver(true);
+        }
+
     }
 }

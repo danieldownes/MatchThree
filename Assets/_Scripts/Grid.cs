@@ -55,7 +55,7 @@ namespace game
         /// <param name="newGems"></param>
         internal void Populate(bool preventMatches = false, Gem[] newGems = null)
         {
-            for (int c = 0; c < Grid.COLS; c++)
+            for( int c = 0; c < Grid.COLS; c++)
             {
                 populateCol(c, preventMatches, c * 0.1f);
             }
@@ -80,10 +80,10 @@ namespace game
             int dropped = 0;
             //bool lastGem;
 
-            for (int r = Grid.ROWS - 1; r >= 0; r--)
+            for( int r = Grid.ROWS - 1; r >= 0; r--)
             {
                 // Add/drop new gem
-                if (grid[c, r] == null)
+                if( grid[c, r] == null)
                 {
                     int type = UnityEngine.Random.Range(1, Gem.TYPES);
 
@@ -94,10 +94,10 @@ namespace game
                     gem.type = type;
                     gem.GemLanded += _onGemLanded;
                     gem.GemSelected += _onGemSelected;
-                    gem.GemDragged += _onGemDrag;
+                    gem.GemDragged += onGemDrag;
 
                     // Check to ensure new gem wont directly match grid
-                    if (preventMatches)
+                    if( preventMatches)
                     {
                         List<Gem> matchesHorz = new List<Gem>();
                         List<Gem> matchesVert = new List<Gem>();
@@ -109,7 +109,7 @@ namespace game
                             matchesHorz.Clear();
                             matchesVert.Clear();
                             gem.type++;
-                            if (gem.type > Gem.TYPES)
+                            if( gem.type > Gem.TYPES)
                                 gem.type = 1;
 
                             checkMatch(gem, matchesHorz, matchesVert);
@@ -125,7 +125,7 @@ namespace game
 
 
                     // Track new gems
-                    if (newGems != null)
+                    if( newGems != null)
                         newGems.Add(gem);
 
                     gemsDropping++;
@@ -158,16 +158,16 @@ namespace game
         private int checkDirection(List<Gem> matches, Gem gem, int c, int r)
         {
             // Check out of bounds
-            if (gem.c + c < 0 || gem.c + c >= Grid.COLS || gem.r + r < 0 || gem.r + r >= Grid.ROWS)
+            if( gem.c + c < 0 || gem.c + c >= Grid.COLS || gem.r + r < 0 || gem.r + r >= Grid.ROWS)
                 return 0;
 
             // Check for null grid index 
-            if (grid[gem.c + c, gem.r + r] == null)
+            if( grid[gem.c + c, gem.r + r] == null)
                 return 0;
 
             // Now check for match
             Gem checkGem = grid[gem.c + c, gem.r + r];
-            if (checkGem.type == gem.type)
+            if( checkGem.type == gem.type)
             {
                 matches.Add(checkGem);
                 //TODO: catch recursion stack overflow exception?
@@ -186,9 +186,9 @@ namespace game
 
             /*
             int n = 0;
-            for (int r = 0; r < Grid.ROWS; r++)
+            for( int r = 0; r < Grid.ROWS; r++)
             {
-                for (int c = 0; c < Grid.COLS; c++)
+                for( int c = 0; c < Grid.COLS; c++)
                 {
                     //Tweener.addCaller(this, { delay:n * 0.01, count:1, onComplete:_removeAndExplodeGem, onCompleteParams:[Gem(grid[c][r])] } );
                     n++;
@@ -206,18 +206,18 @@ namespace game
         {
             Gem gem;
 
-            for (int c = 0; c < Grid.COLS; c++)
+            for( int c = 0; c < Grid.COLS; c++)
             {
                 int lR = Grid.ROWS - 1;     // Last seen row with gem
                 int rowDrop = 0;        // Number of Gems droped in row
-                for (int r = Grid.ROWS - 1; r >= 0; r--) //TODO: ROWS - 2 (don't need to check bottom row)
+                for( int r = Grid.ROWS - 1; r >= 0; r--) //TODO: ROWS - 2 (don't need to check bottom row)
                 {
                     // Row has gem?
                     gem = grid[c, r];
-                    if (gem != null)
+                    if( gem != null)
                     {
                         // Drop this gem? Only if no gem below ** & is not on bottom row ** -- change r loop
-                        if (r != Grid.ROWS - 1 && grid[c, r + 1] == null)
+                        if( r != Grid.ROWS - 1 && grid[c, r + 1] == null)
                         {
                             gem.DoDropDown(rowDrop * SECS_PER_ROW * 0.6f, lR);
 
@@ -227,7 +227,7 @@ namespace game
                             gem.r = lR;
 
                             // Save moved gems for checkMatch()
-                            if (affectedGems_ != null)
+                            if( affectedGems_ != null)
                                 affectedGems_.Add(gem);
 
                             rowDrop++;
@@ -253,24 +253,24 @@ namespace game
         private void _onGemSelected(object sender, GemSelectedEventArgs e)
         {
             //print("_onGemSelected");
-            if (!canSelect)
+            if( !canSelect)
                 return;
 
-            if (gemSelected == null)                // Select
+            if( gemSelected == null)                // Select
             {
                 gemSelected = e.gem;
                 gemSelected.transform.localScale = Vector3.one * 1.2f;
                 // Set selection to top
                 this.transform.SetAsLastSibling();
             }
-            else if (gemSelected == e.gem)         // Deselect
+            else if( gemSelected == e.gem)         // Deselect
             {
                 gemSelected.transform.localScale = Vector3.one;
                 gemSelected = null;
             }
             else                                    // Swap
             {
-                if (PatternMatching.checkSwap(gemSelected, e.gem))
+                if( PatternMatching.checkSwap(gemSelected, e.gem))
                 {
                     gemSwap = e.gem;
                     swapGems(gemSelected, gemSwap, _completeSwapAni);
@@ -294,19 +294,22 @@ namespace game
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _onGemDrag(object sender, GemDraggedEventArgs e)
+        private void onGemDrag(object sender, GemDraggedEventArgs e)
         {
-            if (!canSelect || e.gem == null)
+            if( !canSelect || e.gem == null)
                 return;
-            
+
+            int dx = e.gem.c + (int)e.dragDirection.x;
+            int dy = e.gem.r + (int)e.dragDirection.y;
+
             // Within bounds?
-            if (e.gem.c >= 0 && e.gem.c < Grid.COLS && e.gem.r >= 0 && e.gem.r < Grid.ROWS)
+            if( dx >= 0 && dx < Grid.COLS && dy >= 0 && dy < Grid.ROWS)
             {
                 gemSwap = grid[e.gem.c + (int)e.dragDirection.x, e.gem.r + (int)e.dragDirection.y];
                 gemSelected = e.gem;
 
                 // Gem that is being dragged over is by the side of selected gem?
-                if (PatternMatching.checkSwap(gemSelected, gemSwap))
+                if( PatternMatching.checkSwap(gemSelected, gemSwap))
                 {
                     swapGems(gemSelected, gemSwap, _completeSwapAni);
 
@@ -333,7 +336,7 @@ namespace game
         {
             gemsDropping--;
 
-            if (gemsDropping > 0)
+            if( gemsDropping > 0)
                 return;
 
             //gemsDropping = 0;
@@ -357,14 +360,14 @@ namespace game
                 matchesN += n;
 
                 // Display notification for each gem that a match was found
-                if (n > 0)
+                if( n > 0)
                 {
                     //TOOD: ScoreNotification note = new ScoreNotification(this, gem.x, gem.y, matchesN * score_multiplier);
                 }
             }
 
             // Increase score of there are matches
-            if (matchesN > 0 && checkGems != null && checkGems.Count > 0)
+            if( matchesN > 0 && checkGems != null && checkGems.Count > 0)
             {
                 game.score.AddPoints(matchesN);
 
@@ -391,7 +394,7 @@ namespace game
                 List<Gem> possibleMoves = new List<Gem>();
                 PatternMatching.findPossibleMoves(grid, possibleMoves);
 
-                if (possibleMoves.Count > 0)
+                if( possibleMoves.Count > 0)
                 {
                     //TODO: visuals.setHintGem(hints[Math.floor(Math.random() * hints.length)]);
                 }
@@ -454,7 +457,7 @@ namespace game
             matchesN += checkAndRemove(gemSwap);
             
             // Successful swap?
-            if (matchesN > 0)
+            if( matchesN > 0)
             {
                 game.score.ResetMultiplier();
                 game.score.AddPoints(matchesN);
@@ -495,15 +498,15 @@ namespace game
             checkMatch(gemCheck, matchesH, matchesV);
 
             // Horizontal matches?
-            if (matchesH.Count > 1)
+            if( matchesH.Count > 1)
                 matches.AddRange(matchesH);
 
             // Vertical matches?
-            if (matchesV.Count > 1)
+            if( matchesV.Count > 1)
                 matches.AddRange(matchesV);
 
             // Add gemCheck if there are matches
-            if (matches.Count > 1)
+            if( matches.Count > 1)
                 matches.Add(gemCheck);
 
             // Remove matches

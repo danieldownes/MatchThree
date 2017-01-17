@@ -32,6 +32,10 @@ Private fields start with underscore and lowercase to allow properties with the 
 Notes:
 
 'internal' instead of 'public'
-I agree with top answer here:
+I agree with the top answer here:
 http://stackoverflow.com/questions/106941/should-i-use-internal-or-public-visibility-by-default
 
+If a field should be private, but accessable from the editor, then don't use public so to ensure other classes don't access it, use:
+	[SerializeField]
+	private ...
+As discussed here: http://answers.unity3d.com/questions/60461/warning-cs0649-field-is-never-assigned-to-and-will.html
