@@ -15,7 +15,7 @@ namespace game
         internal Grid grid;
 
         internal Score score;
-        
+                
         internal bool gameOverFlag;
 
 

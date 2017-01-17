@@ -201,8 +201,7 @@ namespace game
         internal event GemSelectedHandler GemSelected;
         internal delegate void GemSelectedHandler(object sender, GemSelectedEventArgs e);
         
-
-        internal event GemDraggedHandler GemDragged;
+        
         protected virtual void OnGemDragged(GemDraggedEventArgs e)
         {
             GemDraggedHandler handler = GemDragged;
@@ -211,6 +210,7 @@ namespace game
                 handler(this, e);
             }
         }
+        internal event GemDraggedHandler GemDragged;
         internal delegate void GemDraggedHandler(object sender, GemDraggedEventArgs e);
         
     }
