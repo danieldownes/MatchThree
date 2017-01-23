@@ -30,25 +30,34 @@ namespace game
             score.Init();
 
             countDownTimer = this.GetComponent<CountdownTimer>();
-            countDownTimer.StartTimer();
-            countDownTimer.TimesUp += CountDownTimer_TimesUp;
+            countDownTimer.Init();
 
             Reset();
+
+            StartGame();
         }
 
 
         /// <summary>
         /// Reset all objects ready for a new game
         /// </summary>
-        internal void Reset()
+        private void Reset()
         {
-            gameOverFlag = false;
             grid.Reset();
-            grid.Populate(true);
             score.Init();
 		}
 
-       
+        /// <summary>
+        /// Start a new game
+        /// </summary>
+        private void StartGame()
+        {
+            gameOverFlag = false;
+            countDownTimer.StartTimer();
+            countDownTimer.TimesUp += CountDownTimer_TimesUp;
+            grid.Populate(true);
+        }
+
         /// <summary>
         /// Called to trigger gameover state
         /// </summary>

@@ -13,13 +13,12 @@ namespace game
         private static float COUNTDOWN_SECONDS = 60.0f;
         private float startTime;
     
-	    void Start()
+	    internal void Init()
         {
             if( Sparks == null)
             {
                 throw new UnassignedReferenceException();
             }
-            Sparks.Stop();
             Sparks.transform.localScale = Vector3.zero;
         }
         
